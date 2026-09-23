@@ -1,0 +1,9 @@
+{
+  "scenarios": [
+    "generic-support",
+    "sales-roleplay",
+    "technical-support"
+  ],
+  "promotion_relative_gain": 0.05,
+  "grounding_minimum": 0.9
+}

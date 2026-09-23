@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: {{ .Release.Name }}-api}
+spec:
+  replicas: {{ .Values.replicaCount.api }}
+  selector: {matchLabels: {app: {{ .Release.Name }}-api}}
+  template:
+    metadata: {labels: {app: {{ .Release.Name }}-api}}
+    spec:
+      containers:
+      - name: api
+        image: {{ .Values.image.api }}
+        ports: [{containerPort: 8000}]
+        env:
+        - {name: APP_ENV, value: {{ .Values.env.APP_ENV | quote }}}
+        - {name: DEV_AUTH_ENABLED, value: {{ .Values.env.DEV_AUTH_ENABLED | quote }}}
+        - name: DATABASE_URL
+          valueFrom: {secretKeyRef: {name: {{ .Release.Name }}-secrets, key: DATABASE_URL}}
+        readinessProbe: {httpGet: {path: /readyz, port: 8000}, initialDelaySeconds: 5, periodSeconds: 10}
+        livenessProbe: {httpGet: {path: /healthz, port: 8000}, initialDelaySeconds: 10, periodSeconds: 20}
+        resources: {{ toYaml .Values.resources.api | nindent 10 }}

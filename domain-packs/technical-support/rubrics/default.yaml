@@ -1,0 +1,7 @@
+dimensions:
+  goal_progress: 20
+  understanding: 15
+  action_quality: 15
+  grounding: 15
+  helpfulness: 10
+  safety: hard

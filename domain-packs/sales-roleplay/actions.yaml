@@ -1,0 +1,13 @@
+actions:
+- name: discover_pain
+  family: sales
+- name: quantify_impact
+  family: sales
+- name: understand_environment
+  family: sales
+- name: identify_constraints
+  family: sales
+- name: handle_objection
+  family: sales
+- name: propose_next_step
+  family: sales

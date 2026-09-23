@@ -1,0 +1,4 @@
+import "./globals.css";
+import Link from "next/link";
+const nav=[["Dashboard","/"],["Agents","/agents"],["Conversations","/conversations"],["Knowledge","/knowledge"],["Scenarios","/scenarios"],["Simulations","/simulations"],["Evaluations","/evaluations"],["Experiments","/experiments"],["Reviews","/reviews"],["Deployments","/deployments"],["Admin","/admin"]];
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body><div className="shell"><aside className="sidebar"><div className="brand">Conversational Agent RSI</div><div className="muted" style={{fontSize:12,marginTop:5}}>Evidence-driven agent improvement</div><nav className="nav">{nav.map(([n,h])=><Link key={h} href={h}>{n}</Link>)}</nav></aside><main className="main">{children}</main></div></body></html>}

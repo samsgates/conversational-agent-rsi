@@ -1,0 +1,3 @@
+expect:
+  manifest_valid: true
+  actions_nonempty: true

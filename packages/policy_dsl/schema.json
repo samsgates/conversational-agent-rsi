@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "safety_policy_ref",
+    "evaluator_suite_ref"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "safety_policy_ref": {
+      "type": "string"
+    },
+    "evaluator_suite_ref": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,11 @@
+actions:
+- name: diagnose
+  family: support
+- name: request_log
+  family: support
+- name: propose_step
+  family: support
+- name: verify_result
+  family: support
+- name: escalate
+  family: support

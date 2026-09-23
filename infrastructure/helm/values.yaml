@@ -1,0 +1,15 @@
+image:
+  api: ghcr.io/visionlab/conversational-agent-rsi-api:latest
+  web: ghcr.io/visionlab/conversational-agent-rsi-web:latest
+replicaCount: {api: 2, worker: 2, web: 2}
+resources:
+  api: {requests: {cpu: 250m, memory: 384Mi}, limits: {cpu: "2", memory: 2Gi}}
+  worker: {requests: {cpu: 500m, memory: 512Mi}, limits: {cpu: "4", memory: 4Gi}}
+service: {apiPort: 8000, webPort: 3000}
+env:
+  APP_ENV: production
+  DEV_AUTH_ENABLED: "false"
+secrets:
+  DATABASE_URL: ""
+  POLICY_SIGNING_KEY: ""
+  JWT_SECRET: ""

@@ -1,0 +1,9 @@
+name: login issue
+split: train
+visible_briefing:
+  issue: User cannot sign in
+hidden_truth:
+  cause: expired password
+goals:
+  resolution: true
+max_turns: 12

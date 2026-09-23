@@ -1,0 +1,3 @@
+rules:
+- id: one-question-per-turn
+  severity: medium

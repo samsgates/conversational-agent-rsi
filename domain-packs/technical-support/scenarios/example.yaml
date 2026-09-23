@@ -1,0 +1,9 @@
+name: service timeout
+split: challenge
+visible_briefing:
+  symptom: API requests timeout
+hidden_truth:
+  cause: connection pool exhaustion
+goals:
+  safe_diagnosis: true
+max_turns: 15

@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment: {POSTGRES_USER: rsi, POSTGRES_PASSWORD: rsi, POSTGRES_DB: rsi}
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck: {test: ["CMD-SHELL","pg_isready -U rsi"], interval: 5s, timeout: 5s, retries: 20}
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+  qdrant:
+    image: qdrant/qdrant:v1.12.6
+    ports: ["6333:6333"]
+    volumes: [qdrant:/qdrant/storage]
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    command: server /data --console-address ":9001"
+    environment: {MINIO_ROOT_USER: localminio, MINIO_ROOT_PASSWORD: localminiosecret}
+    ports: ["9000:9000","9001:9001"]
+    volumes: [minio:/data]
+  nats:
+    image: nats:2.10-alpine
+    command: ["-js","-m","8222"]
+    ports: ["4222:4222","8222:8222"]
+  temporal:
+    image: temporalio/auto-setup:1.27.2
+    depends_on: [postgres]
+    environment:
+      DB: postgres12
+      DB_PORT: 5432
+      POSTGRES_USER: rsi
+      POSTGRES_PWD: rsi
+      POSTGRES_SEEDS: postgres
+      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
+    ports: ["7233:7233"]
+  api:
+    build: {context: ., dockerfile: infrastructure/docker/api.Dockerfile}
+    env_file: .env
+    depends_on: {postgres: {condition: service_healthy}}
+    command: ["/bin/sh","-c","alembic upgrade head && python scripts/seed.py && uvicorn apps.control_api.main:app --host 0.0.0.0 --port 8000"]
+    volumes: ["./scripts:/app/scripts:ro","./domain-packs:/app/domain-packs:ro"]
+    ports: ["8000:8000"]
+  worker:
+    build: {context: ., dockerfile: infrastructure/docker/worker.Dockerfile}
+    env_file: .env
+    depends_on: [temporal,api]
+  web:
+    build: {context: ., dockerfile: infrastructure/docker/web.Dockerfile}
+    environment: {NEXT_PUBLIC_API_URL: "http://localhost:8000"}
+    depends_on: [api]
+    ports: ["3000:3000"]
+volumes: {pgdata: {}, qdrant: {}, minio: {}}

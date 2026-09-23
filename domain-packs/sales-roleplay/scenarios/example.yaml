@@ -1,0 +1,11 @@
+name: discovery call
+split: train
+visible_briefing:
+  company: Example Manufacturing
+hidden_truth:
+  primary_pain: manual quality inspection delays
+  budget_concern: true
+goals:
+  discover_pain: true
+  next_step: true
+max_turns: 15
