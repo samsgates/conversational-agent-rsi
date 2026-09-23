@@ -29,6 +29,10 @@ Open-source-first, self-hostable platform for building, evaluating, replaying, a
 
 ## Quick start
 
+### 1. Full Stack Server (Docker Compose)
+
+The fastest way to spin up the entire platform (PostgreSQL, Redis, Qdrant, MinIO, NATS, Temporal, FastAPI API, Worker, and Next.js Web Console):
+
 ```bash
 cp .env.example .env
 make dev
@@ -40,15 +44,26 @@ Then open:
 - API docs: http://localhost:8000/docs
 - Health: http://localhost:8000/healthz
 
-For a dependency-light backend smoke run:
+### 2. Detailed Guides
+
+For dedicated step-by-step setup and configuration instructions, see:
+
+- **macOS Server & Dev Mode Setup Guide**: [docs/operations/server-and-dev-setup-macos.md](docs/operations/server-and-dev-setup-macos.md) (covers Apple Silicon / Intel prerequisites, full Docker server mode, hybrid hot-reload dev mode, and zero-Docker smoke mode)
+- **Configuration Guide**: [docs/operations/configuration-guide.md](docs/operations/configuration-guide.md) (covers all environment variables, authentication, database connection strings, S3/MinIO, vector search, model gateways, and budgets)
+- **Operations Runbook**: [docs/operations/runbook.md](docs/operations/runbook.md) (covers backup, restore, and incident controls)
+
+### 3. Lightweight Backend Smoke Run (Zero Docker)
+
+For rapid offline unit testing and smoke development without Docker:
 
 ```bash
-python -m venv .venv
-. .venv/bin/activate
+python3.12 -m venv .venv
+source .venv/bin/activate
 pip install -e ".[dev]"
 export DATABASE_URL=sqlite+aiosqlite:///./rsi.db
 export DEV_AUTH_ENABLED=true
 alembic upgrade head
+python scripts/seed.py
 uvicorn apps.control_api.main:app --reload
 ```
 
