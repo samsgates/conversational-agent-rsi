@@ -2,6 +2,8 @@
 
 Open-source-first, self-hostable platform for building, evaluating, replaying, and safely improving RAG-grounded conversation agents. It implements harness-level recursive self-improvement around a frozen base model. It does not modify foundation-model weights.
 
+![Conversational-Agent-RSI platform overview](media_resources/pipeline-details.png)
+
 ## Included
 
 - Multi-tenant FastAPI control plane and conversation runtime
@@ -18,6 +20,12 @@ Open-source-first, self-hostable platform for building, evaluating, replaying, a
 - Next.js web console for dashboard, agents, conversations, knowledge, simulations, evaluations, experiments, deployments, reviews, and admin
 - Three reference domain packs
 - Docker Compose, Helm, CI, tests, seed data, docs
+
+![Conversational-Agent-RSI features and capabilities](media_resources/features.png)
+
+## How it works
+
+![Conversational-Agent-RSI build, test, evaluate, improve, and deploy lifecycle](media_resources/howitsworks.png)
 
 ## Quick start
 
@@ -47,6 +55,8 @@ uvicorn apps.control_api.main:app --reload
 ## Architecture
 
 The repository follows the PRD service boundaries. The local profile intentionally deploys the Python services from one image while preserving typed module boundaries. Production Helm values allow independent scaling of API, runtime, RAG, simulation, evaluation, RSI, registry, and worker workloads.
+
+![Conversational-Agent-RSI high-level architecture](media_resources/high-level-architect.png)
 
 See `docs/architecture/overview.md`, `docs/security/security-model.md`, and `docs/domain-pack-guide/README.md`.
 
